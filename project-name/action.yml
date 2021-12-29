@@ -1,0 +1,30 @@
+name: Get Prefix
+description: Gets the project name to be used for the project name based upon branch.
+author: Selig Labs, Inc <info@seliglabs.com>
+outputs:
+  name:
+    description: The project anme to be used for the project.
+    value: ${{ steps.prefix.outputs.prefix }}${{ steps.package.outputs.name}}
+runs:
+  using: composite
+  steps:
+    - name: Extract Branch Name
+      id: branch
+      uses: SeligLabs/gitactions/branch-name@main
+
+    - name: Get the Prefix
+      id: prefix
+      uses: ../get-prefix
+      with:
+        branch: ${{ steps.branch.outputs.branch }}
+
+    - name: Get Package Information
+      id: package
+      uses: codex-team/action-nodejs-package-info@v1
+
+    - name: Get the output
+      shell: bash
+      run: |
+        echo "name: ${{ steps.package.outputs.name }}"
+        echo "branch: ${{ steps.branch.outputs.branch }}"
+        echo "prefix: ${{ steps.prefix.outputs.prefix }}"

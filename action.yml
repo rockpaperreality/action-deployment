@@ -38,59 +38,29 @@ inputs:
 runs:
   using: composite
   steps:
-  - name: Checkout Branch
-    uses: actions/checkout@master
+    - name: Checkout Branch
+      uses: actions/checkout@master
 
-  - name: Get Package Information
-    id: package
-    uses: codex-team/action-nodejs-package-info@v1
+    - name: Get Package Name
+      id: name
+      uses: ./project-name
 
-  - name: Extract branch name
-    id: branch
-    uses: SeligLabs/gitactions/branch-name@main
-
-  - name: Get Prefix
-    id: prefix
-    shell: bash
-    run: |
-      echo "##[set-output name=prefix;]$(
-        case ${{ steps.branch.outputs.branch }} in
-
-        dev)
-          echo Development
-          ;;
-
-        internal)
-          echo Internal
-          ;;
-
-        stage)
-          echo Staging
-          ;;
-
-        *)
-          echo "temp"
-          ;;
-      esac
-      )"
-
-  - name: Get the output
-    shell: bash
-    run: |
-      echo "name: ${{ steps.package.outputs.name }}"
-      echo "branch: ${{ steps.branch.outputs.branch }}"
-      echo "prefix: ${{ steps.prefix.outputs.prefix }}"
-
-#   - name: Deploy to S3
-#     uses: SeligLabs/gitactions/s3-deploy@main
-#     with:
-#       args: --acl public-read --follow-symlinks --delete
-#       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
-#       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-#       AWS_REGION: ${{ inputs.AWS_REGION }}
-#       AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
-#       SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
-#       DEST_DIR: ${{ inputs.DEST_DIR }}
+    - name: Get the output
+      shell: bash
+      run: |
+        echo "project name: ${{ steps.name.outputs.name }}"
 
 
-# # rpr.to/DevelopmentProjectName, rpr.to/InternalProjectName, rpr.to/StagingProjectName, rpr.to/ProjectName
+  #   - name: Deploy to S3
+  #     uses: SeligLabs/gitactions/s3-deploy@main
+  #     with:
+  #       args: --acl public-read --follow-symlinks --delete
+  #       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+  #       AWS_REGION: ${{ inputs.AWS_REGION }}
+  #       AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+  #       SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
+  #       DEST_DIR: ${{ inputs.DEST_DIR }}
+
+
+  # # rpr.to/DevelopmentProjectName, rpr.to/InternalProjectName, rpr.to/StagingProjectName, rpr.to/ProjectName
