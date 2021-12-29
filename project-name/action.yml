@@ -21,10 +21,3 @@ runs:
     - name: Get Package Information
       id: package
       uses: codex-team/action-nodejs-package-info@v1
-
-    - name: Get the output
-      shell: bash
-      run: |
-        echo "name: ${{ steps.package.outputs.name }}"
-        echo "branch: ${{ steps.branch.outputs.branch }}"
-        echo "prefix: ${{ steps.prefix.outputs.prefix }}"

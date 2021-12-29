@@ -48,7 +48,7 @@ runs:
     - name: Get the output
       shell: bash
       run: |
-        echo "project name: ${{ steps.name.outputs.name }}"
+        echo "project name: ${{ inputs.DEST_DIR || steps.name.outputs.name }}"
 
 
   #   - name: Deploy to S3
