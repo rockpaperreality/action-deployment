@@ -54,7 +54,7 @@ runs:
     id: prefix
     shell: bash
     run: |
-      echo "##[set-output name=prefix;]"$(
+      echo "##[set-output name=prefix;]$(
         case ${{ steps.branch.outputs.branch }} in
 
         dev)
