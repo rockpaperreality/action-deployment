@@ -50,7 +50,7 @@ runs:
     - name: Log
       shell: bash
       run: |
-        echo "Publishing project to: //${{ steps.name.outputs.name }}"
+        echo "Publishing project to: \/${{ steps.name.outputs.name }}"
 
   #   - name: Deploy to S3
   #     uses: SeligLabs/gitactions/s3-deploy@main
@@ -68,14 +68,14 @@ runs:
       run: |
         echo "Completed publishing of the project. Now invalidating the path: //${{ steps.name.outputs.name }}/*"
 
-    - name: Invalidate the CloudFront Distribution
-      uses: SeligLabs/gitactions/invalidate-cloudfront@main
-      with:
-        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ inputs.AWS_REGION }}
-        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
-        PATHS: //${{ steps.name.outputs.name }}/*
+    # - name: Invalidate the CloudFront Distribution
+    #   uses: SeligLabs/gitactions/invalidate-cloudfront@main
+    #   with:
+    #     AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_REGION: ${{ inputs.AWS_REGION }}
+    #     DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
+    #     PATHS: //${{ steps.name.outputs.name }}/*
 
     - name: Log
       shell: bash
