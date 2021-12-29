@@ -1,10 +1,16 @@
 name: Get Prefix
 description: Gets the project name to be used for the project name based upon branch.
 author: Selig Labs, Inc <info@seliglabs.com>
+
+inputs:
+  override:
+    description: An override for the value of the project name.
+    required: false
+
 outputs:
   name:
     description: The project anme to be used for the project.
-    value: ${{ steps.prefix.outputs.prefix }}${{ steps.package.outputs.name}}
+    value: ${{ steps.prefix.outputs.prefix }}${{ inputs.override || steps.package.outputs.name}}
 runs:
   using: composite
   steps:
