@@ -37,9 +37,6 @@ runs:
   - name: Checkout Branch
     uses: actions/checkout@master
 
-  - run: echo Hello ${{ inputs.who-to-greet }}.
-    shell: bash
-
   - name: Deploy to S3
     uses: SeligLabs/gitactions@s3-deploy
     with:
