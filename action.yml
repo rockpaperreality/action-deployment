@@ -37,11 +37,9 @@ runs:
   - name: Checkout Branch
     uses: actions/checkout@master
 
-  - run: echo KEY ${{ AWS_ACCESS_KEY_ID }}.
+  - run: echo KEY ${{ INPUT_AWS_ACCESS_KEY_ID }}.
     shell: bash
   - run: echo inputs ${{ inputs.DEST_DIR }}.
-    shell: bash
-  - run: echo DEST ${{ DEST_DIR }}.
     shell: bash
 
   # - name: Deploy to S3
