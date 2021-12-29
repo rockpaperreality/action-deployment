@@ -69,13 +69,13 @@ runs:
         echo "Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"
 
     - name: Invalidate the CloudFront Distribution
-      uses: SeligLabs/gitactions/invalidate-cloudfront@main
+      uses: chetan/invalidate-cloudfront-action@v2
       with:
         AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ inputs.AWS_REGION }}
         DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
-        PATHS: "/${{ steps.name.outputs.name }} /${{ steps.name.outputs.name }}/*"
+        PATHS: "/${{ steps.name.outputs.name }}/*"
 
     - name: Log
       shell: bash
