@@ -37,8 +37,16 @@ runs:
   - name: Checkout Branch
     uses: actions/checkout@master
 
-  - run: echo inputs ${{ inputs.DEST_DIR }}.
-    shell: bash
+  - name: Get package info
+    id: package
+    uses: codex-team/action-nodejs-package-info@v1
+
+  - name: Get the output
+    uses: shell
+    run: |
+      echo "name: ${{ steps.package.outputs.name }}"
+      echo "version: ${{ steps.package.outputs.version }}"
+      echo "npmjs-link: ${{ steps.package.outputs.npmjs-link }}"
 
   - name: Deploy to S3
     uses: SeligLabs/gitactions@s3-deploy
