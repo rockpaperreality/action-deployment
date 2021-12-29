@@ -75,7 +75,7 @@ runs:
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ inputs.AWS_REGION }}
         DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
-        PATH: /${{ steps.name.outputs.name }}/*
+        PATHS: /${{ steps.name.outputs.name }}/*
 
     - name: Log
       shell: bash
