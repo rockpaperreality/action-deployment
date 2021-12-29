@@ -42,14 +42,14 @@ runs:
     uses: codex-team/action-nodejs-package-info@v1
 
   - name: Get the output
-    uses: shell
+    shell: bash
     run: |
       echo "name: ${{ steps.package.outputs.name }}"
       echo "version: ${{ steps.package.outputs.version }}"
       echo "npmjs-link: ${{ steps.package.outputs.npmjs-link }}"
 
   - name: Deploy to S3
-    uses: SeligLabs/gitactions@s3-deploy
+    uses: SeligLabs/gitactions/s3-deploy@main
     with:
       args: --acl public-read --follow-symlinks --delete
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
