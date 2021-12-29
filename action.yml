@@ -4,6 +4,7 @@ name: Static Project Deployment Pipeline
 on:
   push:
     branches:
+    - main
     - master
 
   # Allows you to run this workflow manually from the Actions tab
