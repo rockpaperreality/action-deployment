@@ -23,6 +23,10 @@ runs:
             echo Development
             ;;
 
+          qa)
+            echo QA
+            ;;
+
           internal)
             echo Internal
             ;;
