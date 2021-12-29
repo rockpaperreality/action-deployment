@@ -1,10 +1,36 @@
 name: Static Project Deployment Pipeline
 description: Deploys a static project to RPRs S3 bucket.
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  AWS_ACCESS_KEY_ID:
+    description: The AWS access key ID.
+    required: false
+    default: AKIASERYN65TMTVK3K5J
+  AWS_SECRET_ACCESS_KEY:
+    description: The AWS secret access key.
+    required: false
+    default: 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
+  AWS_REGION:
+    description: The target AWS region.
+    required: false
+    # default: us-east-1
+    default: us-west-1
+  AWS_S3_BUCKET:
+    description: The target S3 bucket to sync with.
+    required: false
+    # default: rpr.to
+    default: rprs3test
+  AWS_S3_ENDPOINT:
+    description: The AWS endpoint.
+    required: false
+    default: s3.amazonaws.com
+  SOURCE_DIR:
+    description: The local directory (or file) you wish to sync/upload to S3.
+    required: false
+    default: public
+  DEST_DIR:
+    description: The directory inside of the S3 bucket you wish to sync/upload to.
     required: true
-    default: 'World'
+
 runs:
   using: composite
   steps:
@@ -14,14 +40,14 @@ runs:
   - run: echo Hello ${{ inputs.who-to-greet }}.
     shell: bash
 
-  # - name: Deploy to S3
-  #   uses: SeligLabs/gitactions@s3-deploy
-  #   with:
-  #     args: --acl public-read --follow-symlinks --delete
-  #   env:
-  #     AWS_ACCESS_KEY_ID: AKIASERYN65TMTVK3K5J
-  #     AWS_SECRET_ACCESS_KEY: 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
-  #     # AWS_REGION: 'us-west-1'
-  #     AWS_S3_BUCKET: rprs3test
-  #     # AWS_S3_BUCKET: rpr.to
-  #     SOURCE_DIR: 'public'      # optional: defaults to entire repository
+  - name: Deploy to S3
+    uses: SeligLabs/gitactions@s3-deploy
+    with:
+      args: --acl public-read --follow-symlinks --delete
+    env:
+      AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ inputs.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+      SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
+      DEST_DIR: ${{ inputs.DEST_DIR }}
