@@ -29,7 +29,8 @@ inputs:
     default: public
   DEST_DIR:
     description: The directory inside of the S3 bucket you wish to sync/upload to.
-    required: true
+    required: false
+    default: steps.name.outputs.name
   CLOUDFRONT_DISTRIBUTION_ID:
     description: The ID of the CloudFront Distribution to be invalidated.
     required: false
@@ -48,7 +49,7 @@ runs:
     - name: Get the output
       shell: bash
       run: |
-        echo "project name: ${{ inputs.DEST_DIR || steps.name.outputs.name }}"
+        echo "project name: ${{ inputs.DEST_DIR }}"
 
 
   #   - name: Deploy to S3
