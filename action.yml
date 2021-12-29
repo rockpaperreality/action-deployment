@@ -50,7 +50,7 @@ runs:
     - name: Log
       shell: bash
       run: |
-        echo "Publishing project to: \/${{ steps.name.outputs.name }}"
+        echo "Publishing project to: /\${{ steps.name.outputs.name }}"
 
   #   - name: Deploy to S3
   #     uses: SeligLabs/gitactions/s3-deploy@main
