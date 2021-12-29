@@ -10,8 +10,11 @@ runs:
     with:
       args: --acl public-read --follow-symlinks --delete
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      AWS_ACCESS_KEY_ID: AKIASERYN65TMTVK3K5J
+      AWS_SECRET_ACCESS_KEY: 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
+      AWS_S3_BUCKET: rprs3test
+      # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       # AWS_REGION: 'us-west-1'   # optional: defaults to us-east-1
       # SOURCE_DIR: 'public'      # optional: defaults to entire repository
