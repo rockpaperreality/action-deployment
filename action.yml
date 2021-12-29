@@ -54,7 +54,7 @@ runs:
     shell: bash
     run: |
       echo "name: ${{ steps.package.outputs.name }}"
-      echo "name: ${{ steps.branch.outputs.name }}"
+      echo "name: ${{ steps.branch.outputs.branch }}"
 
 #   - name: Deploy to S3
 #     uses: SeligLabs/gitactions/s3-deploy@main
