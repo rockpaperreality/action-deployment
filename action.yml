@@ -50,11 +50,37 @@ runs:
     run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
     id: branch
 
+  - name: Get Prefix
+    id: prefix
+    shell: bash
+    run: |
+      echo "##[set-output name=prefix;]"$(
+        case ${{ steps.branch.outputs.branch }} in
+
+        dev)
+          echo Development
+          ;;
+
+        internal)
+          echo Internal
+          ;;
+
+        stage)
+          echo Staging
+          ;;
+
+        *)
+          echo "temp"
+          ;;
+      esac
+      )"
+
   - name: Get the output
     shell: bash
     run: |
       echo "name: ${{ steps.package.outputs.name }}"
-      echo "name: ${{ steps.branch.outputs.branch }}"
+      echo "branch: ${{ steps.branch.outputs.branch }}"
+      echo "prefix: ${{ steps.prefix.outputs.prefix }}"
 
 #   - name: Deploy to S3
 #     uses: SeligLabs/gitactions/s3-deploy@main
