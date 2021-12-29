@@ -14,7 +14,7 @@ runs:
 
     - name: Get the Prefix
       id: prefix
-      uses: ../get-prefix
+      uses: rockpaperreality/action-deployment/get-prefix@main
       with:
         branch: ${{ steps.branch.outputs.branch }}
 

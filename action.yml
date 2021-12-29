@@ -43,7 +43,7 @@ runs:
 
     - name: Get Package Name
       id: name
-      uses: ./project-name
+      uses: rockpaperreality/action-deployment/project-name@main
 
     - name: Get the output
       shell: bash
