@@ -18,22 +18,22 @@ runs:
       run: |
         case ${{ inputs.branch }} in
           dev | development)
-            ::set-output name=value::Development
+            echo ::set-output name=value::Development
             ;;
 
           qa)
-            ::set-output name=value::QA
+            echo ::set-output name=value::QA
             ;;
 
           internal)
-            ::set-output name=value::Internal
+            echo ::set-output name=value::Internal
             ;;
 
           stage | staging)
-            ::set-output name=value::Staging
+            echo ::set-output name=value::Staging
             ;;
 
           *)
-            ::set-output name=value::""
+            echo ::set-output name=value::
             ;;
         esac
