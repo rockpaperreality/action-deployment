@@ -16,27 +16,24 @@ runs:
       id: prefix
       shell: bash
       run: |
-        ##[set-output name=value;]$(
-          case ${{ inputs.branch }} in
-
+        case ${{ inputs.branch }} in
           dev | development)
-            echo Development
+            ::set-output name=value::Development
             ;;
 
           qa)
-            echo QA
+            ::set-output name=value::QA
             ;;
 
           internal)
-            echo Internal
+            ::set-output name=value::Internal
             ;;
 
           stage | staging)
-            echo Staging
+            ::set-output name=value::Staging
             ;;
 
           *)
-            echo ""
+            ::set-output name=value::
             ;;
         esac
-        )
