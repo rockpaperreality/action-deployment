@@ -47,6 +47,10 @@ runs:
       with:
         NODE_VERSION: 12
 
+    - name: Test file
+      shell: bash
+      run: ls
+
     - name: Get Package Name
       id: name
       uses: rockpaperreality/action-deployment/project-name@main
