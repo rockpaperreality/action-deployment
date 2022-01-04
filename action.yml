@@ -17,8 +17,7 @@ inputs:
   AWS_S3_BUCKET:
     description: The target S3 bucket to sync with.
     required: false
-    # default: rpr.to
-    default: rprs3test
+    default: rpr.to
   AWS_S3_ENDPOINT:
     description: The AWS endpoint.
     required: false
@@ -39,52 +38,43 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: echo input - ${{ inputs.AWS_S3_BUCKET }}
+      run: echo Building project
+
+    - name: Build Package
+      uses: SeligLabs/gitactions/build-npm@main
+      with:
+        NODE_VERSION: 12
 
     - shell: bash
-      run: echo default - ${{ inputs.AWS_S3_BUCKET.default }}
+      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+
+    - name: Get Package Name
+      id: name
+      uses: rockpaperreality/action-deployment/project-name@main
+      with:
+        override: ${{ inputs.DEST_DIR }}
+
+    - name: Deploy to S3
+      uses: SeligLabs/gitactions/s3-deploy@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
+        DEST_DIR: ${{ steps.name.outputs.name }}
 
     - shell: bash
-      run: echo input/default - ${{ inputs.AWS_S3_BUCKET || inputs.AWS_S3_BUCKET.default }}
-    # - shell: bash
-    #   run: echo Building project
+      run: "echo Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"
 
-    # - name: Build Package
-    #   uses: SeligLabs/gitactions/build-npm@main
-    #   with:
-    #     NODE_VERSION: 12
+    - name: Invalidate the CloudFront Distribution
+      uses: SeligLabs/gitactions/invalidate-cloudfront@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
+        PATHS: /${{ steps.name.outputs.name }}/*
 
-    # - shell: bash
-    #   run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
-
-    # - name: Get Package Name
-    #   id: name
-    #   uses: rockpaperreality/action-deployment/project-name@main
-    #   with:
-    #     override: ${{ inputs.DEST_DIR }}
-
-    # - name: Deploy to S3
-    #   uses: SeligLabs/gitactions/s3-deploy@main
-    #   with:
-    #     AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-    #     AWS_REGION: ${{ inputs.AWS_REGION }}
-    #     AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
-    #     SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
-    #     DEST_DIR: ${{ steps.name.outputs.name }}
-
-    # - shell: bash
-    #   run: "echo Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"
-
-    # - name: Invalidate the CloudFront Distribution
-    #   uses: SeligLabs/gitactions/invalidate-cloudfront@main
-    #   with:
-    #     AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-    #     AWS_REGION: ${{ inputs.AWS_REGION }}
-    #     DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
-    #     PATHS: /${{ steps.name.outputs.name }}/*
-
-    # - name: Log
-    #   shell: bash
-    #   run: echo DEPLOYMENT COMPLETE
+    - shell: bash
+      run: echo DEPLOYMENT COMPLETE
