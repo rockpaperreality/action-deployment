@@ -1,5 +1,6 @@
 # Rock Paper Reality Deployment Pipeline
 
+
 This is the standard deployment pipeline for Rock Paper Reality (RPR) static projects.
 
 ## Background
@@ -12,10 +13,10 @@ This Git Action will build the npm project, deploy to S3, and will clear out the
 
 ### Basic Example
 
-The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches.
+The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches. Additionally, it allows manual triggering to be performed. The code should be added in a `.yml` file within the `.github/workflows` directory.
 
 ```yml
-name: Deployment
+name: Deployment Pipeline
 
 on:
   push:
@@ -56,3 +57,7 @@ The following settings must be passed as environment variables as shown in the e
 | SOURCE_DIR | The local directory (or file) to be synced to S3. | env |  | `dist` |
 | DEST_DIR | The directory inside of the S3 bucket the files should be synced to. Note: CloudFront invalidations will also be limited in scope to this same folder. | env |  | Automatic (Uses the `Name` field from package.json) |
 | CLOUDFRONT_DISTRIBUTION_ID | The ID of the CloudFront Distribution to be invalidated. Note: The invalidation scope will be limited to DEST_DIR supplied. | env |  | `E4ZE7H9ALLHAD` |
+
+## License
+
+This project is not licensed for public consuption. See [license](LICENSE.md) for more details.
