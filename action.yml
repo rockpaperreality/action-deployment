@@ -45,8 +45,7 @@ runs:
       shell: bash
       run: echo Building project
 
-    - name: Get Package Name
-      id: name
+    - name: Build Package
       uses: SeligLabs/gitactions/build-npm@main
       with:
         NODE_VERSION: 12
