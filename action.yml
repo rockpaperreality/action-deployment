@@ -39,7 +39,7 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: echo $INPUT_AWS_S3_BUCKET
+      run: echo ${INPUT_AWS_S3_BUCKET}
     # - shell: bash
     #   run: echo Building project
 
