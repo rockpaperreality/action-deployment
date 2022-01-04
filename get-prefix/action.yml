@@ -16,7 +16,7 @@ runs:
       id: prefix
       shell: bash
       run: |
-        echo "##[set-output name=value;]$(
+        ##[set-output name=value;]$(
           case ${{ inputs.branch }} in
 
           dev | development)
@@ -39,4 +39,4 @@ runs:
             echo ""
             ;;
         esac
-        )"
+        )
