@@ -43,7 +43,11 @@ runs:
 
     - name: Log
       shell: bash
-      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+      run: "Building project"
+
+    - name: Get Package Name
+      id: name
+      uses: SeligLabs/gitactions/build-npm@main
 
     # - name: Get Package Name
     #   id: name
