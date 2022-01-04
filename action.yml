@@ -40,6 +40,8 @@ runs:
   steps:
     - name: Checkout Branch
       uses: actions/checkout@master
+      with:
+        persist-credentials: false
 
     - name: Log
       shell: bash
