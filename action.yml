@@ -43,7 +43,7 @@ runs:
 
     - name: Log
       shell: bash
-      run: "Building project"
+      run: "echo Building project"
 
     - name: Get Package Name
       id: name
