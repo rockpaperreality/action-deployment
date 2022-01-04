@@ -34,6 +34,6 @@ runs:
             ;;
 
           *)
-            ::set-output name=value::
+            ::set-output name=value::""
             ;;
         esac
