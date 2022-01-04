@@ -53,16 +53,16 @@ runs:
       id: name
       uses: rockpaperreality/action-deployment/project-name@main
       with:
-        override: ${{ inputs.DEST_DIR || inputs.DEST_DIR.default }}
+        override: ${{ inputs.DEST_DIR }}
 
     - name: Deploy to S3
       uses: SeligLabs/gitactions/s3-deploy@main
       with:
         AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ inputs.AWS_REGION || inputs.AWS_REGION.default }}
-        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET || inputs.AWS_S3_BUCKET.default }}
-        SOURCE_DIR: ${{ inputs.SOURCE_DIR || inputs.SOURCE_DIR.default }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
         DEST_DIR: ${{ steps.name.outputs.name }}
 
     - shell: bash
@@ -73,8 +73,8 @@ runs:
       with:
         AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ inputs.AWS_REGION || inputs.AWS_REGION.default }}
-        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID || inputs.CLOUDFRONT_DISTRIBUTION_ID.default }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
         PATHS: /${{ steps.name.outputs.name }}/*
 
     - name: Log
