@@ -48,6 +48,8 @@ runs:
     - name: Get Package Name
       id: name
       uses: SeligLabs/gitactions/build-npm@main
+      with:
+        NODE-VERSION: 12
 
     # - name: Get Package Name
     #   id: name
