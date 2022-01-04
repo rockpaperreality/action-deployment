@@ -39,7 +39,13 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: echo "${INPUT_AWS_S3_BUCKET}"
+      run: echo ${{ inputs.AWS_S3_BUCKET }}
+
+    - shell: bash
+      run: echo ${{ inputs.AWS_S3_BUCKET.default }}
+
+    - shell: bash
+      run: echo ${{ inputs.AWS_S3_BUCKET || inputs.AWS_S3_BUCKET.default }}
     # - shell: bash
     #   run: echo Building project
 
