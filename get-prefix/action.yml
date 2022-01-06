@@ -19,19 +19,19 @@ runs:
         echo "##[set-output name=value;]$(
           case ${{ inputs.branch }} in
             dev | development)
-              echo Development
+              echo development-
               ;;
 
             qa)
-              echo QA
+              echo qa-
               ;;
 
             internal)
-              echo Internal
+              echo internal-
               ;;
 
             stage | staging)
-              echo Staging
+              echo staging-
               ;;
 
             *)
