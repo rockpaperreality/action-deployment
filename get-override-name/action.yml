@@ -5,7 +5,7 @@ author: Selig Labs, Inc <info@seliglabs.com>
 outputs:
   path:
     description: The override value for the project path for the specific branch.
-    value: ${{ steps.package.outputs.jsonData.test }}
+    value: ${{ steps.package.outputs.jsonData.pathOverrides[steps.prefix.outputs.prefix] }}
 runs:
   using: composite
   steps:
