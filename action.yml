@@ -37,16 +37,16 @@ inputs:
 runs:
   using: composite
   steps:
-    # - shell: bash
-    #   run: echo Building project
+    - shell: bash
+      run: echo Building project
 
-    # - name: Build Package
-    #   uses: SeligLabs/gitactions/build-npm@main
-    #   with:
-    #     NODE_VERSION: 12
+    - name: Build Package
+      uses: SeligLabs/gitactions/build-npm@main
+      with:
+        NODE_VERSION: 12
 
-    # - shell: bash
-    #   run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+    - shell: bash
+      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
 
     - name: Get Package Name
       id: name
