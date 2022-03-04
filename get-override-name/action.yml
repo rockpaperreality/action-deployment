@@ -5,7 +5,7 @@ author: Selig Labs, Inc <info@seliglabs.com>
 outputs:
   path:
     description: The override value for the project path for the specific branch.
-    value: ${{ steps.package.outputs.name }}
+    value: ${{ steps.package.outputs }}
 runs:
   using: composite
   steps:
@@ -15,4 +15,4 @@ runs:
 
     - name: Get Package Information
       id: package
-      uses: codex-team/action-nodejs-package-info@v1
+      uses: SeligLabs/gitactions/read-json-file@main
