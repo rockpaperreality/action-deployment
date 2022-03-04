@@ -9,7 +9,7 @@ inputs:
 
 outputs:
   name:
-    description: The project anme to be used for the project.
+    description: The project name to be used for the project.
     value: ${{ steps.prefix.outputs.prefix }}${{ inputs.override || steps.package.outputs.name}}
 runs:
   using: composite
@@ -27,3 +27,10 @@ runs:
     - name: Get Package Information
       id: package
       uses: codex-team/action-nodejs-package-info@v1
+
+    - name: Get Package Information
+      id: pathOverride
+      uses: rockpaperreality/action-deployment/get-override-name@main
+
+    - shell: bash
+      run: "echo OVERRIDE VALUE: /${{ steps.pathOverride.outputs.path }}/*"

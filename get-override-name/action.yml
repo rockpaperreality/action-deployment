@@ -1,0 +1,18 @@
+name: Get Override Name
+description: Gets the specified override name to be used the path for the specific branch as specified in the project JSON.
+author: Selig Labs, Inc <info@seliglabs.com>
+
+outputs:
+  path:
+    description: The override value for the project path for the specific branch.
+    value: ${{ steps.package.outputs.pathOverrides[steps.branch.outputs.branch]}}
+runs:
+  using: composite
+  steps:
+    - name: Extract Branch Name
+      id: branch
+      uses: SeligLabs/gitactions/branch-name@main
+
+    - name: Get Package Information
+      id: package
+      uses: codex-team/action-nodejs-package-info@v1
