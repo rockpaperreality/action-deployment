@@ -27,4 +27,3 @@ runs:
     - name: Get Package Information
       id: package
       uses: SeligLabs/gitactions/read-json-file@main
-å
