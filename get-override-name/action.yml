@@ -3,9 +3,9 @@ description: Gets the specified override name to be used the path for the specif
 author: Selig Labs, Inc <info@seliglabs.com>
 
 outputs:
-  path:
-    description: The override value for the project path for the specific branch.
-    value: ${{ toJson(steps.package.outputs.jsonData) }}
+  # path:
+  #   description: The override value for the project path for the specific branch.
+  #   value: ${{ toJson(steps.package.outputs.jsonData) }}
 runs:
   using: composite
   steps:
@@ -16,3 +16,9 @@ runs:
     - name: Get Package Information
       id: package
       uses: SeligLabs/gitactions/read-json-file@main
+
+    - name: use output
+        run: |
+          echo $json_var | jq '.pathOverrides'
+        env:
+          json_var: ${{ steps.set.outputs.path}}
