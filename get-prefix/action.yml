@@ -1,14 +1,17 @@
 name: Project Name
 description: Gets the correct project name to be used based upon branch and project configurations.
 author: Selig Labs, Inc <info@seliglabs.com>
+
 inputs:
   branch:
     description: The branch the triggered the Git Action.
     required: true
+
 outputs:
   prefix:
     description: The project name.
     value: ${{ steps.prefix.outputs.value }}
+
 runs:
   using: composite
   steps:

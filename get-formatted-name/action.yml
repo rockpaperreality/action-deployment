@@ -11,6 +11,7 @@ outputs:
   name:
     description: The project name to be used for the project.
     value: ${{ steps.prefix.outputs.prefix }}${{ inputs.override || fromJSON(steps.package.outputs.jsonData).name}}
+
 runs:
   using: composite
   steps:

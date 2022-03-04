@@ -6,6 +6,7 @@ outputs:
   override:
     description: The override value for the project path for the specific branch.
     value: ${{ fromJSON(steps.package.outputs.jsonData).pathOverrides[steps.branch.outputs.branch] }}
+
 runs:
   using: composite
   steps:

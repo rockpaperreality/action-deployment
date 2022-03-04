@@ -10,7 +10,8 @@ inputs:
 outputs:
   name:
     description: The project name to be used for the project.
-    value: ${{ steps.name.outputs.name }}
+    value: ${{ steps.override.outputs.override || steps.name.outputs.name }}
+
 runs:
   using: composite
   steps:
@@ -23,6 +24,3 @@ runs:
       uses: rockpaperreality/action-deployment/get-formatted-name@main
       with:
         override: ${{ inputs.override }}
-
-    - shell: bash
-      run: "echo OVERRIDE VALUE: ${{ steps.override.outputs.override || steps.name.outputs.name }}"
