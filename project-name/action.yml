@@ -33,4 +33,4 @@ runs:
       uses: rockpaperreality/action-deployment/get-override-name@main
 
     - shell: bash
-      run: "echo OVERRIDE VALUE: /${{ steps.pathOverride.outputs.path }}/*"
+      run: "echo OVERRIDE VALUE: ${{ steps.pathOverride.outputs.path }}"
