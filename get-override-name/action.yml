@@ -5,7 +5,7 @@ author: Selig Labs, Inc <info@seliglabs.com>
 outputs:
   path:
     description: The override value for the project path for the specific branch.
-    value: ${{ fromJSON((steps.package.outputs.jsonData) }}
+    value: ${{ fromJSON(steps.package.outputs.jsonData) }}
 runs:
   using: composite
   steps:
