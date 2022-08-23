@@ -41,13 +41,12 @@ runs:
       run: echo Building project
 
     - name: Build Package
-      uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Build
-        run: |
-          yarn
-          yarn build
+      uses: borales/actions-yarn@v3.0.0
+      with:
+        cmd: install # will run `yarn install` command
+      uses: borales/actions-yarn@v3.0.0
+      with:
+        cmd: build # will run `yarn build` command
 
     - name: Get Package Name
       id: name
