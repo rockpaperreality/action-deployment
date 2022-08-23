@@ -40,10 +40,11 @@ runs:
     - shell: bash
       run: echo Building project
 
-    - name: Build Package
+    - name: Install dependencies
       uses: borales/actions-yarn@v3.0.0
       with:
         cmd: install # will run `yarn install` command
+    - name: build
       uses: borales/actions-yarn@v3.0.0
       with:
         cmd: build # will run `yarn build` command
