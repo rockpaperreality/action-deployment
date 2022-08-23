@@ -41,9 +41,13 @@ runs:
       run: echo Building project
 
     - name: Build Package
-      uses: SeligLabs/gitactions/build-npm@main
-      with:
-        NODE_VERSION: 12
+      uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Build
+        run: |
+          yarn
+          yarn build
 
     - name: Get Package Name
       id: name
