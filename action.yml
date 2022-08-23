@@ -25,7 +25,7 @@ inputs:
   SOURCE_DIR:
     description: The local directory (or file) you wish to sync/upload to S3.
     required: false
-    default: dist
+    default: build
   DEST_DIR:
     description: The directory inside of the S3 bucket you wish to sync/upload to.
     required: false
