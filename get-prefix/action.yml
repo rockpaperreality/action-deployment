@@ -18,18 +18,22 @@ runs:
   steps:
     - name: Get Prefix dev
       if: contains(${{ inputs.branch }}, 'dev')
+      shell: bash
       run: echo '::set-output name=PREFIX::development-'
       id: previx-dev
     - name: Get Prefix qa
       if: contains(${{ inputs.branch }}, 'qa')
+      shell: bash
       run: echo '::set-output name=PREFIX::qa-'
       id: previx-qa
     - name: Get Prefix internal
       if: contains(${{ inputs.branch }}, 'internal')
+      shell: bash
       run: echo '::set-output name=PREFIX::internal-'
       id: previx-internal
     - name: Get Prefix staging
       if: contains(${{ inputs.branch }}, 'stag')
+      shell: bash
       run: echo '::set-output name=PREFIX::staging-'
       id: previx-staging
 
