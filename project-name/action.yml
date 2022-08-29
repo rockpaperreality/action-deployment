@@ -21,6 +21,6 @@ runs:
 
     - name: Get Project Name
       id: name
-      uses: rockpaperreality/action-deployment/get-formatted-name@test-2
+      uses: rockpaperreality/action-deployment/get-formatted-name@main
       with:
         override: ${{ inputs.override }}
