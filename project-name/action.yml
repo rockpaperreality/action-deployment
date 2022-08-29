@@ -15,12 +15,12 @@ outputs:
 runs:
   using: composite
   steps:
-#     - name: Get Override Name
-#       id: override
-#       uses: rockpaperreality/action-deployment/get-override-name@main
+    #     - name: Get Override Name
+    #       id: override
+    #       uses: rockpaperreality/action-deployment/get-override-name@main
 
     - name: Get Project Name
       id: name
-      uses: rockpaperreality/action-deployment/get-formatted-name@main
+      uses: rockpaperreality/action-deployment/get-formatted-name@test-2
       with:
         override: ${{ inputs.override }}

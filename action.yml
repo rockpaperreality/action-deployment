@@ -50,7 +50,7 @@ runs:
 
     - name: Get Package Name
       id: name
-      uses: rockpaperreality/action-deployment/project-name@main
+      uses: rockpaperreality/action-deployment/project-name@test-2
       with:
         override: ${{ inputs.DEST_DIR }}
 
