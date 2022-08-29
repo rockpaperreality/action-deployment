@@ -15,6 +15,15 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+      # with:
+      # Optionally strip `v` prefix
+      # strip_v: true
+    - name: Use tag
+      run: echo ${{steps.tag.outputs.tag}}
+
     - name: Get branch name
       id: branch-name
       uses: tj-actions/branch-names@v6
@@ -23,7 +32,7 @@ runs:
       id: prefix
       uses: rockpaperreality/action-deployment/get-prefix@main
       with:
-        branch: ${{ steps.branch.outputs.branch-name }}
+        branch: ${{ steps.tag.outputs.tag || steps.branch.outputs.branch-name }}
 
     - name: Get Package Information
       id: package
