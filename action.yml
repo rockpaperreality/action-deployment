@@ -39,7 +39,7 @@ runs:
   steps:
     - shell: bash
       run: echo Building project
-      
+
     - name: Check out repo
       uses: actions/checkout@v3
 
@@ -47,10 +47,6 @@ runs:
       uses: borales/actions-yarn@v3.0.0
       with:
         cmd: install # will run `yarn install` command
-    - name: build
-      uses: borales/actions-yarn@v3.0.0
-      with:
-        cmd: build # will run `yarn build` command
 
     - name: Get Package Name
       id: name
@@ -60,6 +56,23 @@ runs:
 
     - shell: bash
       run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+
+    # Change package.json to the steps.name.output.name
+    # This is done because per default this will be the deploy URL
+    # and we need to set the deploy URL in the homepage prop
+    - name: package.json overwrite homepage
+      id: homepage
+      uses: jaywcjlove/github-action-package@main
+      with:
+        data: |
+          {
+            "homepage": "${{ steps.name.outputs.name }}"
+          }
+
+    - name: build
+      uses: borales/actions-yarn@v3.0.0
+      with:
+        cmd: build # will run `yarn build` command
 
     - name: Deploy to S3
       uses: SeligLabs/gitactions/s3-deploy@main

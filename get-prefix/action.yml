@@ -9,36 +9,55 @@ inputs:
 
 outputs:
   prefix:
-    description: The project name.
-    value: ${{ steps.prefix.outputs.value }}
+    description: The desired prefix name
+    value: ${{ steps.previx-dev.outputs.PREFIX || steps.previx-qa.outputs.PREFIX || steps.previx-internal.outputs.PREFIX || steps.previx-staging.outputs.PREFIX}}
 
 runs:
   using: composite
+
   steps:
-    - name: Get Prefix
-      id: prefix
-      shell: bash
-      run: |
-        echo "##[set-output name=value;]$(
-          case ${{ inputs.branch }} in
-            dev | development)
-              echo development-
-              ;;
+    - name: Get Prefix dev
+      if: contains(${{ inputs.branch }}, 'dev')
+      run: echo '::set-output name=PREFIX::development-'
+      id: previx-dev
+    - name: Get Prefix qa
+      if: contains(${{ inputs.branch }}, 'qa')
+      run: echo '::set-output name=PREFIX::qa-'
+      id: previx-qa
+    - name: Get Prefix internal
+      if: contains(${{ inputs.branch }}, 'internal')
+      run: echo '::set-output name=PREFIX::internal-'
+      id: previx-internal
+    - name: Get Prefix staging
+      if: contains(${{ inputs.branch }}, 'stag')
+      run: echo '::set-output name=PREFIX::staging-'
+      id: previx-staging
 
-            qa)
-              echo qa-
-              ;;
+  # steps:
+  #   - name: Get Prefix
+  #     id: prefix
+  #     shell: bash
+  #     run: |
+  #       echo "##[set-output name=value;]$(
+  #         case ${{ inputs.branch }} in
+  #           dev | development)
+  #             echo development-
+  #             ;;
 
-            internal)
-              echo internal-
-              ;;
+  #           qa)
+  #             echo qa-
+  #             ;;
 
-            stage | staging)
-              echo staging-
-              ;;
+  #           internal)
+  #             echo internal-
+  #             ;;
 
-            *)
-              echo ""
-              ;;
-          esac
-        )"
+  #           stage | staging)
+  #             echo staging-
+  #             ;;
+
+  #           *)
+  #             echo ""
+  #             ;;
+  #         esac
+  #       )"

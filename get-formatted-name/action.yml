@@ -15,15 +15,15 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Extract Branch Name
-      id: branch
-      uses: SeligLabs/gitactions/branch-name@main
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v6
 
     - name: Get the Prefix
       id: prefix
       uses: rockpaperreality/action-deployment/get-prefix@main
       with:
-        branch: ${{ steps.branch.outputs.branch }}
+        branch: ${{ steps.branch.outputs.branch-name }}
 
     - name: Get Package Information
       id: package
