@@ -18,6 +18,7 @@ runs:
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
     - name: Some other step # Output usage example
+      shell: bash
       run: "echo tagName: ${{ steps.tagName.outputs.tag }}"
 
     - name: Get branch name
