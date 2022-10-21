@@ -22,14 +22,14 @@ runs:
       run: "echo tagName: ${{ steps.tagName.outputs.tag }}"
 
     - name: Get branch name
-      id: branch-name
+      id: branch
       uses: tj-actions/branch-names@v6
 
     - name: Get the Prefix
       id: prefix
       uses: rockpaperreality/action-deployment/get-prefix@main
       with:
-        branch: ${{ steps.tagName.outputs.tag || steps.branch.outputs.branch-name }}
+        branch: ${{ steps.tagName.outputs.tag || steps.branch.outputs.current_branch }}
 
     - name: Get Package Information
       id: package
