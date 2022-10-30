@@ -49,6 +49,7 @@ runs:
       with:
         submodules: "recursive"
         token: ${{ inputs.GITHUB_TOKEN }}
+        fetch-depth: 0
 
     - name: Install dependencies
       uses: borales/actions-yarn@v3.0.0
