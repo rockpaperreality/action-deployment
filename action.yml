@@ -36,7 +36,7 @@ inputs:
   GITHUB_TOKEN:
     description: The ID of the CloudFront Distribution to be invalidated.
     required: false
-    default: E4ZE7H9ALLHAD
+    default: ${{ secrets.ACCESS_TOKEN }}
 
 runs:
   using: composite
