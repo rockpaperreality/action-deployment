@@ -74,7 +74,7 @@ runs:
     #     data: |
     #       {
     #         "homepage": "${{ steps.name.outputs.name }}"
-          }
+    # }
 
     - name: build
       uses: borales/actions-yarn@v3.0.0
