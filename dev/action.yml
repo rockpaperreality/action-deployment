@@ -1,0 +1,107 @@
+name: Static Project Deployment Pipeline
+description: Deploys a static project to RPRs S3 bucket.
+inputs:
+  AWS_ACCESS_KEY_ID:
+    description: The AWS access key ID.
+    required: true
+    # default: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY:
+    description: The AWS secret access key.
+    required: true
+    # default: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION:
+    description: The target AWS region.
+    required: false
+    # default: us-east-1
+    default: us-west-1
+  AWS_S3_BUCKET:
+    description: The target S3 bucket to sync with.
+    required: false
+    default: rpr.to
+  AWS_S3_ENDPOINT:
+    description: The AWS endpoint.
+    required: false
+    default: s3.amazonaws.com
+  SOURCE_DIR:
+    description: The local directory (or file) you wish to sync/upload to S3.
+    required: false
+    default: build
+  DEST_DIR:
+    description: The directory inside of the S3 bucket you wish to sync/upload to.
+    required: false
+  CLOUDFRONT_DISTRIBUTION_ID:
+    description: The ID of the CloudFront Distribution to be invalidated.
+    required: false
+    default: E4ZE7H9ALLHAD
+  GITHUB_TOKEN:
+    description: The ID of the CloudFront Distribution to be invalidated.
+    required: false
+    default: E4ZE7H9ALLHAD
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: echo Building project
+
+    - name: Check out repo
+      uses: actions/checkout@v3
+      with:
+        submodules: "recursive"
+        token: ${{ inputs.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      uses: borales/actions-yarn@v3.0.0
+      with:
+        cmd: install # will run `yarn install` command
+
+    - name: Get Package Name
+      id: name
+      uses: rockpaperreality/action-deployment/project-name@main
+      with:
+        override: ${{ inputs.DEST_DIR }}
+
+    - shell: bash
+      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+
+    # Change package.json to the steps.name.output.name
+    # This is done because per default this will be the deploy URL
+    # and we need to set the deploy URL in the homepage prop
+    - name: package.json overwrite homepage
+      id: homepage
+      uses: jaywcjlove/github-action-package@main
+      with:
+        data: |
+          {
+            "homepage": "${{ steps.name.outputs.name }}"
+          }
+
+    - name: build
+      uses: borales/actions-yarn@v3.0.0
+      with:
+        cmd: build:dev # will run `yarn build` command
+
+    - name: Deploy to S3
+      uses: SeligLabs/gitactions/s3-deploy@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
+        DEST_DIR: ${{ steps.name.outputs.name }}
+
+    - shell: bash
+      run: "echo Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"
+
+    - name: Invalidate the CloudFront Distribution
+      uses: SeligLabs/gitactions/invalidate-cloudfront@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
+        PATHS: /${{ steps.name.outputs.name }}/*
+
+    - shell: bash
+      run: echo DEPLOYMENT COMPLETE
