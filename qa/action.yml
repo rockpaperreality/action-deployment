@@ -61,8 +61,14 @@ runs:
       with:
         override: ${{ inputs.DEST_DIR }}
 
-    - shell: bash
-      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+    # copy assets to live directory on S3 using a Lambda function
+    - name: Invoke copyAssets Lambda
+      uses: gagoar/invoke-aws-lambda@master
+      with:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        FunctionName: copyAssets
+        Payload: '{ "projectName": ${{ inputs.AWS_PROJECT_NAME }} }'
 
     # Change package.json to the steps.name.output.name
     # This is done because per default this will be the deploy URL
@@ -80,6 +86,9 @@ runs:
       uses: borales/actions-yarn@v3.0.0
       with:
         cmd: build:qa # will run `yarn build` command
+
+    - shell: bash
+      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
 
     - name: Deploy to S3
       uses: SeligLabs/gitactions/s3-deploy@main

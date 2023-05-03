@@ -22,6 +22,10 @@ inputs:
     description: The AWS endpoint.
     required: false
     default: s3.amazonaws.com
+  AWS_PROJECT_NAME:
+    description: The directory where we copy assets from during QA run
+    required: false
+    default: template
   SOURCE_DIR:
     description: The local directory (or file) you wish to sync/upload to S3.
     required: false
