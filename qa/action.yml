@@ -65,8 +65,8 @@ runs:
     - name: Invoke copyAssets Lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         FunctionName: copyAssets
         Payload: '{ "projectName": ${{ inputs.AWS_PROJECT_NAME }} }'
 
