@@ -68,7 +68,7 @@ runs:
         AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         FunctionName: copyAssets
-        Payload: '{ "projectName": ${{ inputs.AWS_PROJECT_NAME }} }'
+        Payload: '{ "projectName": "${{ inputs.AWS_PROJECT_NAME }}" }'
 
     # Change package.json to the steps.name.output.name
     # This is done because per default this will be the deploy URL
